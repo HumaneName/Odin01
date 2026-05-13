@@ -21,10 +21,10 @@ main :: proc() {
         rl.BeginDrawing()
         rl.ClearBackground({110,184,168,255})
 
-        if rl.IsKeyDown(.LEFT) {
+        if rl.IsKeyDown(.A) {
             player_vel.x = -400
             player_flip = true
-        } else if rl.IsKeyDown(.RIGHT) {
+        } else if rl.IsKeyDown(.D) {
             player_vel.x = 400
             player_flip = false
         } else {
