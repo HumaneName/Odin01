@@ -32,20 +32,16 @@ playerStart :: proc() {
 
 player :: proc() {
     playerControls()
-
-    player_vel.y += player_gravity * rl.GetFrameTime()     // gravity
-    player_pos += player_vel * rl.GetFrameTime() // adds both X & Y velocities to player's position.
-
-    if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
-        player_pos.y = f32(rl.GetScreenHeight()) - 64 
-        player_grounded = true
-    }
-
-    if player_pos.x > f32(rl.GetScreenWidth()) - 64 {
-        player_pos.x = f32(rl.GetScreenWidth()) - 64
-    } else if player_pos.x < f32(rl.GetScreenWidth()) * -1 
-
+    playerPhys()
     playerDraw()
+    playerDebug()    
+}
+
+playerDebug :: proc() {
+    text := fmt.ctprint("Pos X: ", f16(player_pos.x))
+    text2 := fmt.ctprint("Pos Y: ", f16(player_pos.y))
+    rl.DrawText(text, 10, 10, 20, rl.BLACK)
+    rl.DrawText(text2, 10, 35, 20, rl.BLACK)
 }
 
 playerControls :: proc() {
@@ -62,6 +58,10 @@ playerControls :: proc() {
             player_flip = false
         } else {
             player_vel.x = 0
+    }
+
+    if rl.IsKeyPressed(.R) {
+        playerStart()
     }
 }
 
@@ -99,4 +99,14 @@ playerDraw :: proc() {
     }
 
     rl.DrawTexturePro(player_run_texture, draw_player_source, draw_player_dest, 0, 0, rl.WHITE)
+}
+
+playerPhys :: proc() {
+    player_vel.y += player_gravity * rl.GetFrameTime()     // gravity
+    player_pos += player_vel * rl.GetFrameTime() // adds both X & Y velocities to player's position.
+
+    if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
+        player_pos.y = f32(rl.GetScreenHeight()) - 64 
+        player_grounded = true
+    }
 }
