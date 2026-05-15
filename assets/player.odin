@@ -6,6 +6,8 @@ import "core:fmt"
 // Variables
     player_pos: rl.Vector2
     player_vel: rl.Vector2
+    player_jumps: f16
+    player_maxJumps: f16
     player_grounded: bool
     player_flip: bool
     player_run_texture: rl.Texture2D
@@ -19,6 +21,8 @@ playerStart :: proc() {
     player_gravity = 2000
     player_pos = rl.Vector2 { 640, 320 }
     player_vel = rl.Vector2 {}
+    player_jumps = 0
+    player_maxJumps = 2
     player_grounded = false
     player_flip = false
     player_run_texture = rl.LoadTexture("assets/cat_run.png")
@@ -45,9 +49,10 @@ playerDebug :: proc() {
 }
 
 playerControls :: proc() {
-    if player_grounded && rl.IsKeyPressed(.SPACE) {
+    if (player_grounded || player_jumps < player_maxJumps) && rl.IsKeyPressed(.SPACE) {
         player_vel.y = -600
         player_grounded = false
+        player_jumps += 1
     }
 
     if rl.IsKeyDown(.A) {
@@ -108,5 +113,6 @@ playerPhys :: proc() {
     if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
         player_pos.y = f32(rl.GetScreenHeight()) - 64 
         player_grounded = true
+        player_jumps = 0
     }
 }
