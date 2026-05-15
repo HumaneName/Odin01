@@ -12,8 +12,10 @@ play_run_num_frames: int
 player_run_frame_timer: f32
 player_run_current_frame: int
 player_run_frame_length: f32
+player_gravity: f32
 
 playerStart :: proc() {
+    player_gravity = 2000
     player_pos = rl.Vector2 { 640, 320 }
     player_vel = rl.Vector2 {}
     player_grounded = false
@@ -28,30 +30,37 @@ playerStart :: proc() {
 }
 
 player :: proc() {
-    if rl.IsKeyDown(.A) {
-                player_vel.x = -400
-                player_flip = true
-            } else if rl.IsKeyDown(.D) {
-                player_vel.x = 400
-                player_flip = false
-            } else {
-                player_vel.x = 0
-        }
+    playerControls()
 
-    player_vel.y += 2000 * rl.GetFrameTime()
-
-    if player_grounded && rl.IsKeyPressed(.SPACE) {
-        player_vel.y = -600
-        player_grounded = false
-    }
-
-    player_pos += player_vel * rl.GetFrameTime()
+    player_vel.y += player_gravity * rl.GetFrameTime()     // gravity
+    player_pos += player_vel * rl.GetFrameTime() // adds both X & Y velocities to player's position.
 
     if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
         player_pos.y = f32(rl.GetScreenHeight()) - 64 
         player_grounded = true
     }
 
+    playerDraw()
+}
+
+playerControls :: proc() {
+    if player_grounded && rl.IsKeyPressed(.SPACE) {
+        player_vel.y = -600
+        player_grounded = false
+    }
+
+    if rl.IsKeyDown(.A) {
+            player_vel.x = -400
+            player_flip = true
+        } else if rl.IsKeyDown(.D) {
+            player_vel.x = 400
+            player_flip = false
+        } else {
+            player_vel.x = 0
+    }
+}
+
+playerDraw :: proc() {
     player_run_width := f32(player_run_texture.width)
     player_run_height := f32(player_run_texture.height)
 
