@@ -3,16 +3,17 @@ package assets
 import rl "vendor:raylib"
 import "core:fmt"
 
-player_pos: rl.Vector2
-player_vel: rl.Vector2
-player_grounded: bool
-player_flip: bool
-player_run_texture: rl.Texture2D
-play_run_num_frames: int
-player_run_frame_timer: f32
-player_run_current_frame: int
-player_run_frame_length: f32
-player_gravity: f32
+// Variables
+    player_pos: rl.Vector2
+    player_vel: rl.Vector2
+    player_grounded: bool
+    player_flip: bool
+    player_run_texture: rl.Texture2D
+    play_run_num_frames: int
+    player_run_frame_timer: f32
+    player_run_current_frame: int
+    player_run_frame_length: f32
+    player_gravity: f32
 
 playerStart :: proc() {
     player_gravity = 2000
@@ -39,6 +40,10 @@ player :: proc() {
         player_pos.y = f32(rl.GetScreenHeight()) - 64 
         player_grounded = true
     }
+
+    if player_pos.x > f32(rl.GetScreenWidth()) - 64 {
+        player_pos.x = f32(rl.GetScreenWidth()) - 64
+    } else if player_pos.x < f32(rl.GetScreenWidth()) * -1 
 
     playerDraw()
 }
