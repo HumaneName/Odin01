@@ -19,7 +19,7 @@ import "core:fmt"
 
 playerStart :: proc() {
     player_gravity = 2000
-    player_pos = rl.Vector2 { 640, 320 }
+    player_pos = rl.Vector2 { 400, 300 }
     player_vel = rl.Vector2 {}
     player_jumps = 0
     player_maxJumps = 2
