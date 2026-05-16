@@ -25,7 +25,7 @@ playerStart :: proc() {
     player_maxJumps = 2
     player_grounded = false
     player_flip = false
-    player_run_texture = rl.LoadTexture("assets/cat_run.png")
+    player_run_texture = rl.LoadTexture("assets/images/cat_run.png")
     play_run_num_frames = 4
     player_run_frame_timer = 0.0
     player_run_current_frame = 0
@@ -108,7 +108,7 @@ playerDraw :: proc() {
 
 playerPhys :: proc() {
     player_vel.y += player_gravity * rl.GetFrameTime()     // gravity
-    player_pos += player_vel * rl.GetFrameTime() // adds both X & Y velocities to player's position.
+    player_pos += player_vel * rl.GetFrameTime()           // adds both X & Y velocities to player's position.
 
     if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
         player_pos.y = f32(rl.GetScreenHeight()) - 64 

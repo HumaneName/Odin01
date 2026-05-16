@@ -5,7 +5,7 @@ import "core:fmt"
 import "assets"
 
 main :: proc() {
-    rl.InitWindow(1280,720,"My first game.")
+    rl.InitWindow(1280,720,"Platformer game.")
     assets.playerStart()
 
     for !rl.WindowShouldClose() {
