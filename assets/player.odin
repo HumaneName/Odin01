@@ -16,7 +16,9 @@ import "core:fmt"
     player_run_current_frame: int
     player_run_frame_length: f32
     player_gravity: f32
+    player_debug: bool
 
+// Sets variables
 playerStart :: proc() {
     player_gravity = 2000
     player_pos = rl.Vector2 { 400, 300 }
@@ -30,10 +32,12 @@ playerStart :: proc() {
     player_run_frame_timer = 0.0
     player_run_current_frame = 0
     player_run_frame_length = 0.1
+    player_debug = false
 
     fmt.println("Player is received.")
 }
 
+// Game loop
 player :: proc() {
     playerControls()
     playerPhys()
@@ -41,11 +45,14 @@ player :: proc() {
     playerDebug()    
 }
 
+// Prints player info
 playerDebug :: proc() {
-    text := fmt.ctprint("Pos X: ", f16(player_pos.x))
-    text2 := fmt.ctprint("Pos Y: ", f16(player_pos.y))
-    rl.DrawText(text, 10, 10, 20, rl.BLACK)
-    rl.DrawText(text2, 10, 35, 20, rl.BLACK)
+    if player_debug {
+        text := fmt.ctprint("Pos X: ", f16(player_pos.x))
+        text2 := fmt.ctprint("Pos Y: ", f16(player_pos.y))
+        rl.DrawText(text, 10, 10, 20, rl.BLACK)
+        rl.DrawText(text2, 10, 35, 20, rl.BLACK)
+    }
 }
 
 playerControls :: proc() {
@@ -67,6 +74,14 @@ playerControls :: proc() {
 
     if rl.IsKeyPressed(.R) {
         playerStart()
+    }
+
+    if rl.IsKeyPressed(.J) {
+        if !player_debug {
+            player_debug = true
+        } else {
+            player_debug = false
+        }
     }
 }
 
