@@ -4,7 +4,6 @@ import rl "vendor:raylib"
 import "core:fmt"
 import "assets"
 
-
 main :: proc() {
     rl.InitWindow(800,600,"Platformer game.")
     assets.playerStart()

@@ -125,9 +125,9 @@ playerPhys :: proc() {
     player_vel.y += player_gravity * rl.GetFrameTime()     // gravity
     player_pos += player_vel * rl.GetFrameTime()           // adds both X & Y velocities to player's position.
 
-    if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
-        player_pos.y = f32(rl.GetScreenHeight()) - 64 
-        player_grounded = true
-        player_jumps = 0
+    if player_pos.y > f32(rl.GetScreenHeight()) - 64 {     // If player is 64 above the bottom of Window
+        player_pos.y = f32(rl.GetScreenHeight()) - 64      // Set player to 64 above bottom of window 
+        player_grounded = true                             // Say the player is grounded,
+        player_jumps = 0                                   // Reset player jumps to allow double/multi jumps
     }
 }
